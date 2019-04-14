@@ -1,4 +1,4 @@
-package com.kyc.FavorApp
+package com.kyc.favorapp
 
 import androidx.test.InstrumentationRegistry
 import androidx.test.runner.AndroidJUnit4
