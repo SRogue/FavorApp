@@ -1,6 +1,7 @@
 package com.kyc.favorapp.view
 
 import android.content.Context
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -38,6 +39,11 @@ class MainFragment : Fragment() {
             param2 = it.getString(ARG_PARAM2)
         }
 
+//        arguments?.apply {
+//            param1 = getString(ARG_PARAM1)
+//            param2 = getString(ARG_PARAM2)
+//        }
+//
 
     }
 
@@ -52,6 +58,8 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         text!!.text = param2
+
+        text.setOnClickListener { activity!!.startActivity(Intent(activity,Main2Activity::class.java))}
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -72,6 +80,7 @@ class MainFragment : Fragment() {
     override fun onDetach() {
         super.onDetach()
         listener = null
+
     }
 
     /**
@@ -108,12 +117,9 @@ class MainFragment : Fragment() {
                     putString(ARG_PARAM2, param2)
                 }
 
-                arguments = Bundle().let {
-                    it.putString(ARG_PARAM1, param1)
-                    it.putString(ARG_PARAM2, param2)
-                    it
-                }
-
             }
     }
+
+
+
 }

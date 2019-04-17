@@ -5,4 +5,5 @@ package com.kyc.favorapp.model
         name = "999"
         age = 20
     }
-}
+
+ }
