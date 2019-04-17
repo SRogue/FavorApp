@@ -9,7 +9,6 @@ import android.graphics.*
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
-import android.view.WindowManager
 import android.view.animation.LinearInterpolator
 import android.view.animation.OvershootInterpolator
 import com.kyc.favorapp.R
@@ -125,7 +124,6 @@ class DragBubbleView @JvmOverloads constructor(context: Context, attrs: Attribut
      */
     private var mCurDrawableIndex: Int = 0
 
-    private var mWindowManager: WindowManager? = null
 
     private var dragListener: DragTouchListener? = null
 
@@ -139,13 +137,9 @@ class DragBubbleView @JvmOverloads constructor(context: Context, attrs: Attribut
         initBase(context, attrs, defStyleAttr)
     }
 
-    //    public DragBubbleView(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-    //        super(context, attrs, defStyleAttr, defStyleRes);
-    //
-    //    }
+
 
     private fun initBase(context: Context, attrs: AttributeSet?, defStyleAttr: Int) {
-        mWindowManager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
         val array = context.obtainStyledAttributes(attrs, R.styleable.DragBubbleView, defStyleAttr, 0).apply {
             mBubbleRadius = getDimension(R.styleable.DragBubbleView_bubble_radius, mBubbleRadius)
             mBubbleColor = getColor(R.styleable.DragBubbleView_bubble_color, Color.RED)

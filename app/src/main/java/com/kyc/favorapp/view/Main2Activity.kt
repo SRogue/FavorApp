@@ -16,9 +16,7 @@ class Main2Activity : AppCompatActivity(), DragTouchListener {
     private var mWm: WindowManager? = null
     private var mParams: WindowManager.LayoutParams? = null
 
-
     override fun beOnTouch() {
-
 
         when (dragbubbleview.parent) {
             is ViewGroup -> {
@@ -37,10 +35,8 @@ class Main2Activity : AppCompatActivity(), DragTouchListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main2)
-
         initView()
         initListener()
-
         dragbubbleview.setDragTouchListener(this)
     }
 
@@ -52,11 +48,9 @@ class Main2Activity : AppCompatActivity(), DragTouchListener {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             mParams!!.flags = WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
         }
-
     }
 
     private fun initListener() {
-
 
     }
 }
