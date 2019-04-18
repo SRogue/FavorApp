@@ -4,11 +4,10 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
+import androidx.fragment.app.Fragment
 import com.kyc.favorapp.R
 import kotlinx.android.synthetic.main.fragment_main.*
 
@@ -39,11 +38,7 @@ class MainFragment : Fragment() {
             param2 = it.getString(ARG_PARAM2)
         }
 
-//        arguments?.apply {
-//            param1 = getString(ARG_PARAM1)
-//            param2 = getString(ARG_PARAM2)
-//        }
-//
+
 
     }
 

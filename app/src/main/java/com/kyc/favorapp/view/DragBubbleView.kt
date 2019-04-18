@@ -7,8 +7,11 @@ import android.animation.ValueAnimator
 import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
+import android.util.Log
+import android.util.TypedValue
 import android.view.MotionEvent
 import android.view.View
+import android.view.View.MeasureSpec.getMode
 import android.view.animation.LinearInterpolator
 import android.view.animation.OvershootInterpolator
 import com.kyc.favorapp.R
@@ -18,9 +21,10 @@ import com.kyc.favorapp.model.DragTouchListener
  * QQ气泡效果
  * copy by oliver from netEast product!!
  */
-class DragBubbleView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) :
-    View(context, attrs, defStyleAttr) {
-
+class DragBubbleView constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) :
+        View(context, attrs, defStyleAttr) {
+    private var mScreenWidth = 0
+    private var mScreenHeight = 0
     /**
      * 气泡默认状态--静止
      */
@@ -41,15 +45,15 @@ class DragBubbleView @JvmOverloads constructor(context: Context, attrs: Attribut
     /**
      * 气泡半径
      */
-    private var mBubbleRadius: Float = 0.toFloat()
+    var mBubbleRadius: Float = 0.toFloat()
     /**
      * 气泡颜色
      */
-    private var mBubbleColor: Int = 0
+    var mBubbleColor: Int = Color.RED
     /**
      * 气泡消息文字
      */
-    private var mTextStr: String? = ""
+    var mTextStr: String? = "99"
     /**
      * 气泡消息文字颜色
      */
@@ -122,7 +126,7 @@ class DragBubbleView @JvmOverloads constructor(context: Context, attrs: Attribut
     /**
      * 当前气泡爆炸图片index
      */
-    private var mCurDrawableIndex: Int = 0
+    var mCurDrawableIndex: Int = 0
 
 
     private var dragListener: DragTouchListener? = null
@@ -131,23 +135,38 @@ class DragBubbleView @JvmOverloads constructor(context: Context, attrs: Attribut
      * 气泡爆炸的图片id数组
      */
     private val mBurstDrawablesArray =
-        intArrayOf(R.mipmap.burst_1, R.mipmap.burst_2, R.mipmap.burst_3, R.mipmap.burst_4, R.mipmap.burst_5)
+            intArrayOf(R.mipmap.burst_1, R.mipmap.burst_2, R.mipmap.burst_3, R.mipmap.burst_4, R.mipmap.burst_5)
 
     init {
+        mBubbleRadius = TypedValue.complexToFloat(10)
+        mBubbleColor = Color.RED
+        mTextStr = "99"
+        Log.e("787888", "mTextRect = init")
+
+        mTextSize = TypedValue.complexToFloat(12)
+        mTextColor = Color.WHITE
+
         initBase(context, attrs, defStyleAttr)
     }
 
+    constructor(context: Context, listener: DragTouchListener) : this(context, null) {
+        dragListener = listener
+    }
 
+    constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
 
     private fun initBase(context: Context, attrs: AttributeSet?, defStyleAttr: Int) {
         val array = context.obtainStyledAttributes(attrs, R.styleable.DragBubbleView, defStyleAttr, 0).apply {
             mBubbleRadius = getDimension(R.styleable.DragBubbleView_bubble_radius, mBubbleRadius)
             mBubbleColor = getColor(R.styleable.DragBubbleView_bubble_color, Color.RED)
             mTextStr = getString(R.styleable.DragBubbleView_bubble_text)
+            Log.e("787888", "mTextRect = initBase")
+
             mTextSize = getDimension(R.styleable.DragBubbleView_bubble_textSize, mTextSize)
             mTextColor = getColor(R.styleable.DragBubbleView_bubble_textColor, Color.WHITE)
             recycle()
         }
+
 
         //两个圆半径大小一致
         mBubFixedRadius = mBubbleRadius
@@ -188,10 +207,36 @@ class DragBubbleView @JvmOverloads constructor(context: Context, attrs: Attribut
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
+        Log.e("00000", "onsizeChange")
 
-        init(w, h)
     }
 
+
+    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
+        // 宽度测量
+        val widthMode = getMode(widthMeasureSpec)
+        val widthSize = MeasureSpec.getSize(widthMeasureSpec)
+
+        when (widthMode) {
+            MeasureSpec.AT_MOST -> mScreenWidth = Math.min(widthSize, 100)
+            MeasureSpec.EXACTLY -> mScreenWidth = widthSize
+            MeasureSpec.UNSPECIFIED -> mScreenWidth = 100
+        }
+
+        // 高度测量
+        val heightMode = getMode(heightMeasureSpec)
+        val heightSize = MeasureSpec.getSize(heightMeasureSpec)
+
+        when (heightMode) {
+            MeasureSpec.AT_MOST -> mScreenHeight = Math.min(heightSize, 100)
+            MeasureSpec.EXACTLY -> mScreenHeight = heightSize
+            MeasureSpec.UNSPECIFIED -> mScreenHeight = 100
+        }
+        setMeasuredDimension(mScreenWidth, mScreenHeight)
+
+        init(mScreenWidth, mScreenHeight)
+    }
 
     private fun init(w: Int, h: Int) {
         mBubbleState = BUBBLE_STATE_DEFAULT
@@ -204,6 +249,7 @@ class DragBubbleView @JvmOverloads constructor(context: Context, attrs: Attribut
             mBubFixedCenter!!.set((w / 2).toFloat(), (h / 2).toFloat())
 
         }
+        Log.e("wwww", "mBubFixedCenter.x = ${mBubFixedCenter?.x}   mBubFixedCenter.y = ${mBubFixedCenter?.y}")
         //设置可动气泡圆心初始坐标
         if (mBubMovableCenter == null) {
             mBubMovableCenter = PointF((w / 2).toFloat(), (h / 2).toFloat())
@@ -256,22 +302,25 @@ class DragBubbleView @JvmOverloads constructor(context: Context, attrs: Attribut
         //静止，连接，分离状态都需要绘制圆背景以及文本
         if (mBubbleState != BUBBLE_STATE_DISMISS) {
             canvas.drawCircle(mBubMovableCenter!!.x, mBubMovableCenter!!.y, mBubMovableRadius, mBubblePaint!!)
+            Log.e("787888", "mtextpaint = null" + (mTextPaint == null))
+            Log.e("787888", "mTextStr = null" + (mTextStr == null))
+            Log.e("787888", "mTextRect = null" + (mTextRect == null))
             mTextPaint!!.getTextBounds(mTextStr, 0, mTextStr!!.length, mTextRect)
             canvas.drawText(
-                mTextStr!!,
-                mBubMovableCenter!!.x - mTextRect!!.width() / 2,
-                mBubMovableCenter!!.y + mTextRect!!.height() / 2,
-                mTextPaint!!
+                    mTextStr!!,
+                    mBubMovableCenter!!.x - mTextRect!!.width() / 2,
+                    mBubMovableCenter!!.y + mTextRect!!.height() / 2,
+                    mTextPaint!!
             )
         }
 
         // 认为是消失状态，执行爆炸动画
         if (mBubbleState == BUBBLE_STATE_DISMISS && mCurDrawableIndex < mBurstBitmapsArray!!.size) {
             mBurstRect!!.set(
-                (mBubMovableCenter!!.x - mBubMovableRadius).toInt(),
-                (mBubMovableCenter!!.y - mBubMovableRadius).toInt(),
-                (mBubMovableCenter!!.x + mBubMovableRadius).toInt(),
-                (mBubMovableCenter!!.y + mBubMovableRadius).toInt()
+                    (mBubMovableCenter!!.x - mBubMovableRadius).toInt(),
+                    (mBubMovableCenter!!.y - mBubMovableRadius).toInt(),
+                    (mBubMovableCenter!!.x + mBubMovableRadius).toInt(),
+                    (mBubMovableCenter!!.y + mBubMovableRadius).toInt()
             )
             canvas.drawBitmap(mBurstBitmapsArray!![mCurDrawableIndex], null, mBurstRect!!, mBubblePaint)
         }
@@ -283,14 +332,14 @@ class DragBubbleView @JvmOverloads constructor(context: Context, attrs: Attribut
             MotionEvent.ACTION_DOWN -> {
 
                 dragListener!!.beOnTouch()
-
+                Log.e("9999", "ontouch down   dragListener  = $dragListener")
                 if (mBubbleState != BUBBLE_STATE_DISMISS) {
                     mDist =
-                        Math.hypot(
-                            (event.x - mBubFixedCenter!!.x).toDouble(),
-                            (event.y - mBubFixedCenter!!.y).toDouble()
-                        )
-                            .toFloat()
+                            Math.hypot(
+                                    (event.x - mBubFixedCenter!!.x).toDouble(),
+                                    (event.y - mBubFixedCenter!!.y).toDouble()
+                            )
+                                    .toFloat()
                     mBubbleState = if (mDist < mBubbleRadius + MOVE_OFFSET) {
                         //加上MOVE_OFFSET是为了方便拖拽
                         BUBBLE_STATE_CONNECT
@@ -301,8 +350,8 @@ class DragBubbleView @JvmOverloads constructor(context: Context, attrs: Attribut
             }
             MotionEvent.ACTION_MOVE -> if (mBubbleState != BUBBLE_STATE_DEFAULT) {
                 mDist =
-                    Math.hypot((event.x - mBubFixedCenter!!.x).toDouble(), (event.y - mBubFixedCenter!!.y).toDouble())
-                        .toFloat()
+                        Math.hypot((event.x - mBubFixedCenter!!.x).toDouble(), (event.y - mBubFixedCenter!!.y).toDouble())
+                                .toFloat()
                 mBubMovableCenter!!.x = event.x
                 mBubMovableCenter!!.y = event.y
                 if (mBubbleState == BUBBLE_STATE_CONNECT) {
@@ -335,9 +384,9 @@ class DragBubbleView @JvmOverloads constructor(context: Context, attrs: Attribut
      */
     private fun startBubbleRestAnim() {
         val anim = ValueAnimator.ofObject(
-            PointFEvaluator(),
-            PointF(mBubMovableCenter!!.x, mBubMovableCenter!!.y),
-            PointF(mBubFixedCenter!!.x, mBubFixedCenter!!.y)
+                PointFEvaluator(),
+                PointF(mBubMovableCenter!!.x, mBubMovableCenter!!.y),
+                PointF(mBubFixedCenter!!.x, mBubFixedCenter!!.y)
         )
         anim.duration = 200
         anim.interpolator = OvershootInterpolator(5f)

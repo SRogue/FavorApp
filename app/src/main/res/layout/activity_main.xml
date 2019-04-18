@@ -1,108 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:context=".view.MainActivity">
+        android:layout_height="match_parent"
+        tools:context=".view.MainActivity">
 
         <RadioGroup
-                android:id="@+id/rg"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:layout_width="match_parent"
-                android:orientation="horizontal"
-                android:layout_height="40dp">
+            android:id="@+id/rg"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal"
+            >
 
             <RadioButton
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:id="@+id/first"
-                    android:text="萝莉"
-                    android:button="@null"
-                    android:gravity="center"
-                    android:background="@null"
-                    android:layout_height="match_parent"/>
+                android:id="@+id/first"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@null"
+                android:button="@null"
+                android:gravity="center"
+                android:text="萝莉" />
 
             <RadioButton
-                    android:layout_width="0dp"
-                    android:id="@+id/second"
-                    android:layout_weight="1"
-                    android:button="@null"
-                    android:background="@null"
-                    android:text="御姐"
-                    android:gravity="center"
-                    android:layout_height="match_parent"/>
+                android:id="@+id/second"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@null"
+                android:button="@null"
+                android:gravity="center"
+                android:text="御姐" />
 
             <RadioButton
-                    android:layout_width="0dp"
-                    android:id="@+id/third"
-                    android:layout_weight="1"
-                    android:button="@null"
-                    android:background="@null"
-                    android:text="少女"
-                    android:gravity="center"
-                    android:layout_height="match_parent"/>
+                android:id="@+id/third"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@null"
+                android:button="@null"
+                android:gravity="center"
+                android:text="少女" />
 
             <RadioButton
-                    android:layout_width="0dp"
-                    android:id="@+id/fourth"
-                    android:layout_weight="1"
-                    android:button="@null"
-                    android:gravity="center"
-                    android:background="@null"
-                    android:text="人妻"
-                    android:layout_height="match_parent"/>
+                android:id="@+id/fourth"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@null"
+                android:button="@null"
+                android:gravity="center"
+                android:text="人妻" />
         </RadioGroup>
 
         <View
-                android:id="@+id/divider_line"
-                android:layout_width="0dp"
-                android:layout_height="1px"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintBottom_toTopOf="@+id/rg"
-                android:background="@android:color/holo_red_dark"
-                />
+            android:id="@+id/divider_line"
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_above="@+id/rg"
+            android:background="@android:color/holo_red_dark"
+             />
 
         <androidx.viewpager2.widget.ViewPager2
-                android:id="@+id/viewpager2"
-                android:layout_width="match_parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toTopOf="@+id/divider_line"
-                android:layout_height="0dp"/>
+            android:id="@+id/viewpager2"
+            android:layout_width="match_parent"
+            android:layout_above="@+id/rg"
+            android:layout_height="match_parent"
+             />
 
         <com.kyc.favorapp.view.DragBubbleView
-                android:id="@+id/dragbubbleview"
-                android:layout_width="20dp"
-                app:bubble_radius="10dp"
-                app:bubble_text="99"
-                android:padding="2dp"
-                app:layout_constraintHorizontal_bias="0.175"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/rg"
-                app:layout_constraintBottom_toTopOf="@+id/rg"
-                app:bubble_color="@android:color/holo_red_dark"
-                app:bubble_textSize="10dp"
-                app:bubble_textColor="@android:color/white"
-                android:layout_height="20dp"/>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            android:id="@+id/dragbubbleview"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_above="@+id/rg"
+            android:layout_marginBottom="100dp"
+            android:layout_marginLeft="50dp"
+            app:bubble_color="@android:color/holo_red_dark"
+            app:bubble_radius="10dp"
+            app:bubble_text="99"
+            app:bubble_textColor="@android:color/white"
+            app:bubble_textSize="10dp"
+             />
+    </RelativeLayout>
 
 
     <FrameLayout
-            android:id="@+id/frame_layout"
-            android:layout_width="match_parent"
-            android:background="@android:color/transparent"
-            android:visibility="gone"
-            android:layout_height="match_parent">
+        android:id="@+id/frame_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/transparent"
+        android:visibility="gone">
 
     </FrameLayout>
 

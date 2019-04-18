@@ -1,10 +1,10 @@
 package com.kyc.favorapp.view
 
 import android.content.Context
+import android.graphics.Color
 import android.graphics.PixelFormat
 import android.net.Uri
 import android.os.Bundle
-import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
@@ -25,9 +25,13 @@ class MainActivity : AppCompatActivity(), MainFragment.OnFragmentInteractionList
 
 
     override fun beOnTouch() {
-        currentbubbleView = DragBubbleView(this)
+        currentbubbleView = DragBubbleView(this,this)
+        currentbubbleView?.mTextStr = "99"
+        currentbubbleView?.mBubbleRadius =100f
+        currentbubbleView?.mBubbleColor = Color.BLUE
         val params = WindowManager.LayoutParams()
         params.format = PixelFormat.TRANSLUCENT
+//        params.flags = params.flags or WindowManager.LayoutParams.FLAG_FULLSCREEN
         params.type = params.type or WindowManager.LayoutParams.TYPE_APPLICATION_PANEL
         mWindowManager!!.addView(currentbubbleView, params)
 
@@ -52,15 +56,14 @@ class MainActivity : AppCompatActivity(), MainFragment.OnFragmentInteractionList
     private fun initData() {
 
         mWindowManager = getSystemService(Context.WINDOW_SERVICE) as WindowManager
-
         mParams = frame_layout.layoutParams
 
 
         fragments = arrayListOf(
-            MainFragment.newInstance("first", "This is the first"),
-            MainFragment.newInstance("second", "This is the second"),
-            MainFragment.newInstance("third", "This is the third"),
-            MainFragment.newInstance("fourth", "This is the fourth")
+                MainFragment.newInstance("first", "This is the first"),
+                MainFragment.newInstance("second", "This is the second"),
+                MainFragment.newInstance("third", "This is the third"),
+                MainFragment.newInstance("fourth", "This is the fourth")
         )
 
         viewpager2.isUserInputEnabled = false

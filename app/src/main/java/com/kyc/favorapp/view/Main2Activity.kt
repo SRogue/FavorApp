@@ -37,7 +37,6 @@ class Main2Activity : AppCompatActivity(), DragTouchListener {
         setContentView(R.layout.activity_main2)
         initView()
         initListener()
-        dragbubbleview.setDragTouchListener(this)
     }
 
     private fun initView() {
