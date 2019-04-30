@@ -8,7 +8,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".view.MainActivity">
+        tools:context=".activity.MainActivity">
 
         <RadioGroup
             android:id="@+id/rg"
@@ -74,19 +74,6 @@
             android:layout_height="match_parent"
              />
 
-        <com.kyc.favorapp.view.DragBubbleView
-            android:id="@+id/dragbubbleview"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_above="@+id/rg"
-            android:layout_marginBottom="100dp"
-            android:layout_marginLeft="50dp"
-            app:bubble_color="@android:color/holo_red_dark"
-            app:bubble_radius="10dp"
-            app:bubble_text="99"
-            app:bubble_textColor="@android:color/white"
-            app:bubble_textSize="10dp"
-             />
     </RelativeLayout>
 
 

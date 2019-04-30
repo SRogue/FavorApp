@@ -1,4 +1,4 @@
-package com.kyc.favorapp.model
+package com.kyc.favorapp.listener
 
 interface DragTouchListener {
     fun beOnTouch()

@@ -2,7 +2,6 @@ package com.kyc.favorapp.view
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
-import android.animation.PointFEvaluator
 import android.animation.ValueAnimator
 import android.content.Context
 import android.graphics.*
@@ -15,14 +14,14 @@ import android.view.View.MeasureSpec.getMode
 import android.view.animation.LinearInterpolator
 import android.view.animation.OvershootInterpolator
 import com.kyc.favorapp.R
-import com.kyc.favorapp.model.DragTouchListener
+import com.kyc.favorapp.listener.DragTouchListener
 
 /**
  * QQ气泡效果
  * copy by oliver from netEast product!!
  */
 class DragBubbleView constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) :
-        View(context, attrs, defStyleAttr) {
+    View(context, attrs, defStyleAttr) {
     private var mScreenWidth = 0
     private var mScreenHeight = 0
     /**
@@ -135,7 +134,7 @@ class DragBubbleView constructor(context: Context, attrs: AttributeSet? = null, 
      * 气泡爆炸的图片id数组
      */
     private val mBurstDrawablesArray =
-            intArrayOf(R.mipmap.burst_1, R.mipmap.burst_2, R.mipmap.burst_3, R.mipmap.burst_4, R.mipmap.burst_5)
+        intArrayOf(R.mipmap.burst_1, R.mipmap.burst_2, R.mipmap.burst_3, R.mipmap.burst_4, R.mipmap.burst_5)
 
     init {
         mBubbleRadius = TypedValue.complexToFloat(10)
@@ -263,7 +262,7 @@ class DragBubbleView constructor(context: Context, attrs: AttributeSet? = null, 
 
         //1. 连接情况绘制贝塞尔曲线  2.绘制圆背景以及文本 3.另外端点绘制一个圆
         //1. 静止状态  2，连接状态 3，分离状态  4，消失
-
+Log.e("ondraw","ondrawing....")
 
         if (mBubbleState == BUBBLE_STATE_CONNECT) {
             //绘制静止的气泡
@@ -307,20 +306,20 @@ class DragBubbleView constructor(context: Context, attrs: AttributeSet? = null, 
             Log.e("787888", "mTextRect = null" + (mTextRect == null))
             mTextPaint!!.getTextBounds(mTextStr, 0, mTextStr!!.length, mTextRect)
             canvas.drawText(
-                    mTextStr!!,
-                    mBubMovableCenter!!.x - mTextRect!!.width() / 2,
-                    mBubMovableCenter!!.y + mTextRect!!.height() / 2,
-                    mTextPaint!!
+                mTextStr!!,
+                mBubMovableCenter!!.x - mTextRect!!.width() / 2,
+                mBubMovableCenter!!.y + mTextRect!!.height() / 2,
+                mTextPaint!!
             )
         }
 
         // 认为是消失状态，执行爆炸动画
         if (mBubbleState == BUBBLE_STATE_DISMISS && mCurDrawableIndex < mBurstBitmapsArray!!.size) {
             mBurstRect!!.set(
-                    (mBubMovableCenter!!.x - mBubMovableRadius).toInt(),
-                    (mBubMovableCenter!!.y - mBubMovableRadius).toInt(),
-                    (mBubMovableCenter!!.x + mBubMovableRadius).toInt(),
-                    (mBubMovableCenter!!.y + mBubMovableRadius).toInt()
+                (mBubMovableCenter!!.x - mBubMovableRadius).toInt(),
+                (mBubMovableCenter!!.y - mBubMovableRadius).toInt(),
+                (mBubMovableCenter!!.x + mBubMovableRadius).toInt(),
+                (mBubMovableCenter!!.y + mBubMovableRadius).toInt()
             )
             canvas.drawBitmap(mBurstBitmapsArray!![mCurDrawableIndex], null, mBurstRect!!, mBubblePaint)
         }
@@ -330,16 +329,15 @@ class DragBubbleView constructor(context: Context, attrs: AttributeSet? = null, 
     override fun onTouchEvent(event: MotionEvent): Boolean {
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
-
                 dragListener!!.beOnTouch()
                 Log.e("9999", "ontouch down   dragListener  = $dragListener")
                 if (mBubbleState != BUBBLE_STATE_DISMISS) {
                     mDist =
-                            Math.hypot(
-                                    (event.x - mBubFixedCenter!!.x).toDouble(),
-                                    (event.y - mBubFixedCenter!!.y).toDouble()
-                            )
-                                    .toFloat()
+                        Math.hypot(
+                            (event.x - mBubFixedCenter!!.x).toDouble(),
+                            (event.y - mBubFixedCenter!!.y).toDouble()
+                        )
+                            .toFloat()
                     mBubbleState = if (mDist < mBubbleRadius + MOVE_OFFSET) {
                         //加上MOVE_OFFSET是为了方便拖拽
                         BUBBLE_STATE_CONNECT
@@ -350,8 +348,8 @@ class DragBubbleView constructor(context: Context, attrs: AttributeSet? = null, 
             }
             MotionEvent.ACTION_MOVE -> if (mBubbleState != BUBBLE_STATE_DEFAULT) {
                 mDist =
-                        Math.hypot((event.x - mBubFixedCenter!!.x).toDouble(), (event.y - mBubFixedCenter!!.y).toDouble())
-                                .toFloat()
+                    Math.hypot((event.x - mBubFixedCenter!!.x).toDouble(), (event.y - mBubFixedCenter!!.y).toDouble())
+                        .toFloat()
                 mBubMovableCenter!!.x = event.x
                 mBubMovableCenter!!.y = event.y
                 if (mBubbleState == BUBBLE_STATE_CONNECT) {
@@ -363,16 +361,18 @@ class DragBubbleView constructor(context: Context, attrs: AttributeSet? = null, 
                 }
                 invalidate()
             }
-            MotionEvent.ACTION_UP -> if (mBubbleState == BUBBLE_STATE_CONNECT) {
-                // 橡皮筋动画
-                startBubbleRestAnim()
-            } else if (mBubbleState == BUBBLE_STATE_APART) {
-                if (mDist < 2 * mBubbleRadius) {
-                    //反弹动画
+            MotionEvent.ACTION_UP -> {
+                if (mBubbleState == BUBBLE_STATE_CONNECT) {
+                    // 橡皮筋动画
                     startBubbleRestAnim()
-                } else {
-                    // 爆炸动画
-                    startBubbleBurstAnim()
+                } else if (mBubbleState == BUBBLE_STATE_APART) {
+                    if (mDist < 2 * mBubbleRadius) {
+                        //反弹动画
+                        startBubbleRestAnim()
+                    } else {
+                        // 爆炸动画
+                        startBubbleBurstAnim()
+                    }
                 }
             }
         }
@@ -384,9 +384,9 @@ class DragBubbleView constructor(context: Context, attrs: AttributeSet? = null, 
      */
     private fun startBubbleRestAnim() {
         val anim = ValueAnimator.ofObject(
-                PointFEvaluator(),
-                PointF(mBubMovableCenter!!.x, mBubMovableCenter!!.y),
-                PointF(mBubFixedCenter!!.x, mBubFixedCenter!!.y)
+            MyPointEvaluate(),
+            PointF(mBubMovableCenter!!.x, mBubMovableCenter!!.y),
+            PointF(mBubFixedCenter!!.x, mBubFixedCenter!!.y)
         )
         anim.duration = 200
         anim.interpolator = OvershootInterpolator(5f)
@@ -403,7 +403,6 @@ class DragBubbleView constructor(context: Context, attrs: AttributeSet? = null, 
             }
         })
         anim.start()
-
     }
 
     /**

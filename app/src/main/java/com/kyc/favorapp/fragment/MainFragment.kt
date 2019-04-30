@@ -1,7 +1,6 @@
-package com.kyc.favorapp.view
+package com.kyc.favorapp.fragment
 
 import android.content.Context
-import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -54,7 +53,11 @@ class MainFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         text!!.text = param2
 
-        text.setOnClickListener { activity!!.startActivity(Intent(activity,Main2Activity::class.java))}
+        text.setOnClickListener {
+
+
+
+        }
     }
 
     // TODO: Rename method, update argument and hook method into UI event

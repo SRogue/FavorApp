@@ -1,8 +1,6 @@
-package com.kyc.favorapp.view
+package com.kyc.favorapp.activity
 
 import android.content.Context
-import android.graphics.Color
-import android.graphics.PixelFormat
 import android.net.Uri
 import android.os.Bundle
 import android.view.ViewGroup
@@ -11,37 +9,16 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.kyc.favorapp.R
-import com.kyc.favorapp.model.DragTouchListener
+import com.kyc.favorapp.fragment.MainFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity(), MainFragment.OnFragmentInteractionListener, DragTouchListener {
+class MainActivity : AppCompatActivity(), MainFragment.OnFragmentInteractionListener {
     var fragments: ArrayList<Fragment>? = null
 
     private var mParams: ViewGroup.LayoutParams? = null
 
-    private var currentbubbleView: DragBubbleView? = null
-
     private var mWindowManager: WindowManager? = null
 
-
-    override fun beOnTouch() {
-        currentbubbleView = DragBubbleView(this,this)
-        currentbubbleView?.mTextStr = "99"
-        currentbubbleView?.mBubbleRadius =100f
-        currentbubbleView?.mBubbleColor = Color.BLUE
-        val params = WindowManager.LayoutParams()
-        params.format = PixelFormat.TRANSLUCENT
-//        params.flags = params.flags or WindowManager.LayoutParams.FLAG_FULLSCREEN
-        params.type = params.type or WindowManager.LayoutParams.TYPE_APPLICATION_PANEL
-        mWindowManager!!.addView(currentbubbleView, params)
-
-
-    }
-
-    override fun lossTouch() {
-        mWindowManager!!.removeView(currentbubbleView)
-        currentbubbleView = null
-    }
 
     override fun onFragmentInteraction(uri: Uri) {
     }
@@ -60,10 +37,10 @@ class MainActivity : AppCompatActivity(), MainFragment.OnFragmentInteractionList
 
 
         fragments = arrayListOf(
-                MainFragment.newInstance("first", "This is the first"),
-                MainFragment.newInstance("second", "This is the second"),
-                MainFragment.newInstance("third", "This is the third"),
-                MainFragment.newInstance("fourth", "This is the fourth")
+            MainFragment.newInstance("first", "This is the first"),
+            MainFragment.newInstance("second", "This is the second"),
+            MainFragment.newInstance("third", "This is the third"),
+            MainFragment.newInstance("fourth", "This is the fourth")
         )
 
         viewpager2.isUserInputEnabled = false
@@ -76,7 +53,6 @@ class MainActivity : AppCompatActivity(), MainFragment.OnFragmentInteractionList
 
 
     private fun initListener() {
-        dragbubbleview.setDragTouchListener(this)
         rg.setOnCheckedChangeListener { _, checkedId ->
             when (checkedId) {
                 R.id.first -> gotoPage(0)
