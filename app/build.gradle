@@ -5,41 +5,47 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion app_version.compileSdkVersion
     defaultConfig {
         applicationId "com.kyc.favorapp"
-        minSdkVersion 19
-        targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
+        minSdkVersion app_version.minSdkVersion
+        targetSdkVersion app_version.targetSdkVersion
+        versionCode app_version.versionCode
+        versionName app_version.versionName
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled false //关闭代码混淆
+            zipAlignEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
 }
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$rootProject.kotlin_version"
-    implementation 'androidx.appcompat:appcompat:1.1.0-alpha04'
-    implementation 'androidx.core:core-ktx:1.1.0-alpha05'
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-    implementation 'com.airbnb.android:mvrx:1.0.0'
-
-    implementation 'androidx.viewpager2:viewpager2:1.0.0-alpha03'
-    implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
-
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$rootProject.coroutinesVersion"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$rootProject.coroutinesVersion"
-    implementation "androidx.core:core-ktx:$rootProject.ktxVersion"
+    implementation depens.kt_stdlib_jdk7
+    implementation depens.kt_coroutines_android
 
 
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation depens.androidx_appcompat
+    implementation depens.androidx_constraintlayout
+    implementation depens.androidx_viewpager2
+    implementation depens.androidx_lifecycle
+    implementation depens.androidx_legacy
+    implementation depens.rx_kt
+    implementation depens.rx_android
 
 
+    implementation depens.retrofit
+    implementation depens.retrofitConverter
+    implementation depens.retrofitAdapter
+    implementation depens.log_intercepter
 
 }
