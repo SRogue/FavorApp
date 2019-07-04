@@ -37,10 +37,10 @@ class MainActivity : AppCompatActivity(), MainFragment.OnFragmentInteractionList
 
 
         fragments = arrayListOf(
-            MainFragment.newInstance("first", "This is the first"),
-            MainFragment.newInstance("second", "This is the second"),
-            MainFragment.newInstance("third", "This is the third"),
-            MainFragment.newInstance("fourth", "This is the fourth")
+            MainFragment.newInstance(FIRST_FRAGMENT, "This is the first"),
+            MainFragment.newInstance(SECOND_FRAGMENT, "This is the second"),
+            MainFragment.newInstance(THIRD_FRAGMENT, "This is the third"),
+            MainFragment.newInstance(FOURTH_FRAGMENT, "This is the fourth")
         )
 
         viewpager2.isUserInputEnabled = false
@@ -67,6 +67,13 @@ class MainActivity : AppCompatActivity(), MainFragment.OnFragmentInteractionList
         if (position < fragments!!.size) {
             viewpager2.setCurrentItem(position, false)
         }
+    }
+
+    companion object {
+        const val FIRST_FRAGMENT = "first"
+        const val SECOND_FRAGMENT = "second"
+        const val THIRD_FRAGMENT = "third"
+        const val FOURTH_FRAGMENT = "fourth"
     }
 
 

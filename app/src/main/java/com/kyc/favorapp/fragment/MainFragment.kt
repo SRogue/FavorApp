@@ -8,7 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.kyc.favorapp.R
-import kotlinx.android.synthetic.main.fragment_main.*
+import com.kyc.favorapp.activity.AsyncDiffActivity
+import kotlinx.android.synthetic.main.inflate_view.text
+import kotlinx.android.synthetic.main.fragment_main.text as text1
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -38,7 +40,6 @@ class MainFragment : Fragment() {
         }
 
 
-
     }
 
     override fun onCreateView(
@@ -51,13 +52,13 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        text!!.text = param2
-
-        text.setOnClickListener {
-
-
-
+        param1?.let {
+            text.text = it
         }
+        text.setOnClickListener {
+            AsyncDiffActivity.intentMe(context!!)
+        }
+
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -118,6 +119,6 @@ class MainFragment : Fragment() {
             }
     }
 
-
-
+    private fun launchText() {
+    }
 }

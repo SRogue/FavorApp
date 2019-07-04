@@ -13,5 +13,5 @@ class MusicData(/*音乐资源id*/
     val musicRes: Int, /*专辑图片id*/
     val musicPicRes: Int, /*音乐名称*/
     val musicName: String, /*作者*/
-    val musicAuthor: String
+    val musicAuthor: String,var name:String = "999"
 ) : Serializable

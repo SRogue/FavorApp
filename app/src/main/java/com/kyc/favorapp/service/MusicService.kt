@@ -11,6 +11,8 @@ import android.os.IBinder
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.kyc.favorapp.activity.MusicActivity.Companion.PARAM_MUSIC_LIST
 import com.kyc.favorapp.model.MusicData
+import java.util.*
+import kotlin.collections.ArrayList
 
 /**
  * Created by AchillesL on 2016/11/18.

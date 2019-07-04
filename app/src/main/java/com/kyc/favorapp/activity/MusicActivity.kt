@@ -1,6 +1,7 @@
 package com.kyc.favorapp.activity
 
 
+import android.annotation.SuppressLint
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -17,18 +18,14 @@ import android.os.Handler
 import android.os.Message
 import android.view.View
 import android.view.WindowManager
-import android.widget.ImageView
 import android.widget.SeekBar
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.postDelayed
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.kyc.favorapp.R
 import com.kyc.favorapp.model.MusicData
 import com.kyc.favorapp.service.MusicService
 import com.kyc.favorapp.util.DisplayUtil
 import com.kyc.favorapp.util.FastBlurUtil
-import com.kyc.favorapp.view.BackgourndAnimationRelativeLayout
 import com.kyc.favorapp.view.DiscView
 import com.kyc.favorapp.view.DiscView.Companion.DURATION_NEEDLE_ANIAMTOR
 import kotlinx.android.synthetic.main.activity_music.*
@@ -42,14 +39,16 @@ class MusicActivity : AppCompatActivity(), DiscView.IPlayInfo, View.OnClickListe
     private val myDiscuview by lazy { discview as DiscView }
 
 
-    private val mMusicHandler = object : Handler() {
-        override fun handleMessage(msg: Message) {
-            super.handleMessage(msg)
-            musicSeekBar.progress = musicSeekBar.progress + 1000
-            tvCurrentTime.text = duration2Time(musicSeekBar.progress)
-            startUpdateSeekBarProgress()
+    private val mMusicHandler =
+        @SuppressLint("HandlerLeak")
+        object : Handler() {
+            override fun handleMessage(msg: Message) {
+                super.handleMessage(msg)
+                musicSeekBar.progress = musicSeekBar.progress + 1000
+                tvCurrentTime.text = duration2Time(musicSeekBar.progress)
+                startUpdateSeekBarProgress()
+            }
         }
-    }
 
     private val mMusicReceiver = MusicReceiver()
     private val mMusicDatas = ArrayList<MusicData>()
@@ -205,7 +204,7 @@ class MusicActivity : AppCompatActivity(), DiscView.IPlayInfo, View.OnClickListe
         options.inSampleSize = sample
         options.inPreferredConfig = Bitmap.Config.RGB_565
 
-        return BitmapFactory.decodeResource(getResources(), musicPicRes, options)
+        return BitmapFactory.decodeResource(resources, musicPicRes, options)
     }
 
     override fun onMusicInfoChanged(musicName: String, musicAuthor: String) {
