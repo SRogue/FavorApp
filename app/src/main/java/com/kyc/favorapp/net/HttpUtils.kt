@@ -1,7 +1,9 @@
 package com.kyc.favorapp.net
 
-import com.kyc.favorapp.util.PreferencesUtil
-import com.kyc.favorapp.util.SpConfig
+import com.kyc.favorapp.bean.HttpResultEntity
+import com.kyc.favorapp.util.*
+import io.reactivex.Observable
+import io.reactivex.ObservableOnSubscribe
 import okhttp3.HttpUrl
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -19,10 +21,10 @@ object HttpUtils {
             val request = chain.request()
             //获取request的创建者builder
             val builder = request.newBuilder()
-            builder.addHeader("token", PreferencesUtil.getString(SpConfig.TOKEN))
+            builder.addHeader("token", SpUtil.getString(SpConfig.TOKEN))
                 .addHeader("reqSource", "ANDROID").addHeader(
                     "reqShopId",
-                    PreferencesUtil.getString(SpConfig.SHOP_ID)
+                    SpUtil.getString(SpConfig.SHOP_ID)
                 )
                 .addHeader("appVersion", 17.toString())
                 .addHeader("appChannel", "maill").addHeader("req-source", "ANDROID-2")
@@ -42,7 +44,7 @@ object HttpUtils {
                         builder.addHeader("Content-Type", "application/json")
                         builder.addHeader(
                             "shopId",
-                            PreferencesUtil.getString(SpConfig.SHOP_ID)
+                            SpUtil.getString(SpConfig.SHOP_ID)
                         )
                         val newFullUrl = oldHttpUrl
                             .newBuilder()
@@ -114,8 +116,17 @@ object HttpUtils {
 
     private val serviceHttpUrl = retrofit.create(ServiceHttpUrl::class.java)
 
-    fun doHttp() {
-
+    fun <T> doHttp(observable: Observable<HttpResultEntity<T>>, callBack: DataCallback<T>) {
+        observable.flatMap { mapper ->
+            Observable.create(ObservableOnSubscribe<T> {
+                if (mapper.isSuccess()) {
+                    it.onNext(mapper.data)
+                } else {
+                    it.onError(ResultThrowable(mapper.code, mapper.msg, null))
+                }
+                it.onComplete()
+            })
+        }.nomarlSubscrib().subscribe(callBack)
     }
 
 

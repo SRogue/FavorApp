@@ -6,9 +6,9 @@ object HttpConfig {
     private var isDebug = true
 
 
-    private const val debugBaseUrl = "http://jybdata.iqdii.com"
+    private const val debugBaseUrl = "https://h5test.buylala.cn"
 
-    private const val releaseBaseUrl = "http://jybdata.iqdii.com"
+    private const val releaseBaseUrl = "https://h5.buylala.cn"
 
     fun getBaseUrl(): String = if (isDebug) debugBaseUrl else releaseBaseUrl
 

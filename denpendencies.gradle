@@ -19,7 +19,8 @@ ext {
             rx_kt_vs                    : '2.2.0',
             rx_android_vs               : '2.1.1',
             retrofit                    : "2.5.0",
-            okhttp3_log_intercepter_vs  : "3.11.0"
+            okhttp3_log_intercepter_vs  : "3.11.0",
+            autodispose                 : '1.3.0'
     ]
 
     kt_version = [
@@ -47,11 +48,17 @@ ext {
 
             //jetpack套装
             androidx_lifecycle       : "androidx.lifecycle:lifecycle-extensions:${depens_version.androidx_lifecycle_vs}",
+            androidx_lifecycle_ktx   : "androidx.lifecycle:lifecycle-viewmodel-ktx:${depens_version.androidx_lifecycle_vs}",
             androidx_legacy          : "androidx.legacy:legacy-support-v4:${depens_version.androidx_legacy_vs}",
 
             //rx套装
             rx_kt                    : "io.reactivex.rxjava2:rxkotlin:${depens_version.rx_kt_vs}",
             rx_android               : "io.reactivex.rxjava2:rxandroid:${depens_version.rx_android_vs}",
+
+
+            autodispose_android      : "com.uber.autodispose:autodispose-android-archcomponents:${depens_version.autodispose}",
+            autodispose              : "com.uber.autodispose:autodispose:${depens_version.autodispose}",
+
 
             //retrofit套装
             retrofit                 : "com.squareup.retrofit2:retrofit:${depens_version.retrofit}",

@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import com.kyc.favorapp.base.BaseApplication
 
-object PreferencesUtil {
+object SpUtil {
 
     private const val name = "APP_Config"
     private val prefs: SharedPreferences by lazy {

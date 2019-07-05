@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.kyc.favorapp.R
+import com.kyc.favorapp.fragment.LoginTestFragment
 import com.kyc.favorapp.fragment.MainFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -37,7 +38,7 @@ class MainActivity : AppCompatActivity(), MainFragment.OnFragmentInteractionList
 
 
         fragments = arrayListOf(
-            MainFragment.newInstance(FIRST_FRAGMENT, "This is the first"),
+            LoginTestFragment.newInstance(FIRST_FRAGMENT, "This is the first"),
             MainFragment.newInstance(SECOND_FRAGMENT, "This is the second"),
             MainFragment.newInstance(THIRD_FRAGMENT, "This is the third"),
             MainFragment.newInstance(FOURTH_FRAGMENT, "This is the fourth")

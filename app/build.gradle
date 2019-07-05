@@ -26,6 +26,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
@@ -38,6 +43,7 @@ dependencies {
     implementation depens.androidx_constraintlayout
     implementation depens.androidx_viewpager2
     implementation depens.androidx_lifecycle
+    implementation depens.androidx_lifecycle_ktx
     implementation depens.androidx_legacy
     implementation depens.rx_kt
     implementation depens.rx_android
@@ -47,5 +53,11 @@ dependencies {
     implementation depens.retrofitConverter
     implementation depens.retrofitAdapter
     implementation depens.log_intercepter
+
+
+
+    // autodispose
+    api depens.autodispose_android
+    api depens.autodispose
 
 }

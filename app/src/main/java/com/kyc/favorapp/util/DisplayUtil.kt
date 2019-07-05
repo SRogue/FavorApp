@@ -1,7 +1,6 @@
 package com.kyc.favorapp.util
 
 import android.content.Context
-import com.kyc.favorapp.net.HttpUtils
 
 /**
  * Created by AchillesL on 2016/11/16.
