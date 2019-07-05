@@ -129,6 +129,19 @@ object HttpUtils {
         }.nomarlSubscrib().subscribe(callBack)
     }
 
+    fun <T> doHttp(observable: Observable<HttpResultEntity<T>>): Observable<T>? {
+        return observable.flatMap { mapper ->
+            Observable.create(ObservableOnSubscribe<T> {
+                if (mapper.isSuccess()) {
+                    it.onNext(mapper.data)
+                } else {
+                    it.onError(ResultThrowable(mapper.code, mapper.msg, null))
+                }
+                it.onComplete()
+            })
+        }
+    }
+
 
     fun get(): ServiceHttpUrl = serviceHttpUrl
 
