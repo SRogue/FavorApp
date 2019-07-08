@@ -41,7 +41,7 @@ class BackgourndAnimationRelativeLayout @JvmOverloads constructor(
     }
 
     private fun initLayerDrawable() {
-        val backgroundDrawable = context.getDrawable(R.drawable.ic_blackground)
+        val backgroundDrawable = context.resources.getDrawable(R.drawable.ic_blackground)
         val drawables = arrayOfNulls<Drawable>(2)
 
         /*初始化时先将前景与背景颜色设为一致*/
@@ -93,9 +93,10 @@ class BackgourndAnimationRelativeLayout @JvmOverloads constructor(
     }
 
     fun isNeed2UpdateBackground(musicPicRes: Int): Boolean {
-        if (this.musicPicRes == -1) return true
-        return if (musicPicRes != this.musicPicRes) {
+        return if (musicPicRes == -1) {
             true
-        } else false
+        } else {
+            musicPicRes != this.musicPicRes
+        }
     }
 }

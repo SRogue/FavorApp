@@ -1,15 +1,14 @@
 package com.kyc.favorapp.net
 
-import com.kyc.favorapp.bean.HttpResultEntity
-import com.kyc.favorapp.util.*
-import io.reactivex.Observable
-import io.reactivex.ObservableOnSubscribe
+import com.kyc.favorapp.util.SpConfig
+import com.kyc.favorapp.util.SpUtil
 import okhttp3.HttpUrl
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
+
 
 object HttpUtils {
 
@@ -115,32 +114,6 @@ object HttpUtils {
         .addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build()
 
     private val serviceHttpUrl = retrofit.create(ServiceHttpUrl::class.java)
-
-    fun <T> doHttp(observable: Observable<HttpResultEntity<T>>, callBack: DataCallback<T>) {
-        observable.flatMap { mapper ->
-            Observable.create(ObservableOnSubscribe<T> {
-                if (mapper.isSuccess()) {
-                    it.onNext(mapper.data)
-                } else {
-                    it.onError(ResultThrowable(mapper.code, mapper.msg, null))
-                }
-                it.onComplete()
-            })
-        }.nomarlSubscrib().subscribe(callBack)
-    }
-
-    fun <T> doHttp(observable: Observable<HttpResultEntity<T>>): Observable<T>? {
-        return observable.flatMap { mapper ->
-            Observable.create(ObservableOnSubscribe<T> {
-                if (mapper.isSuccess()) {
-                    it.onNext(mapper.data)
-                } else {
-                    it.onError(ResultThrowable(mapper.code, mapper.msg, null))
-                }
-                it.onComplete()
-            })
-        }
-    }
 
 
     fun get(): ServiceHttpUrl = serviceHttpUrl

@@ -1,6 +1,6 @@
 package com.kyc.favorapp.net
 
-import com.kyc.favorapp.bean.HttpResultEntity
+import com.kyc.favorapp.bean.BaseEntity
 import com.kyc.favorapp.bean.LoginInfo
 import io.reactivex.Observable
 import okhttp3.RequestBody
@@ -12,5 +12,5 @@ interface ServiceHttpUrl {
     //登录
     @Headers("url_source:h5")
     @POST("/shoppingmall/anon/loginForCode")
-    fun login(@Body body: RequestBody): Observable<HttpResultEntity<LoginInfo>>
+    fun login(@Body body: RequestBody): Observable<BaseEntity<LoginInfo>>
 }

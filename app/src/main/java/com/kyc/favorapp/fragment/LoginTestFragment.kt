@@ -4,11 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProviders
 import com.kyc.favorapp.R
-import com.kyc.favorapp.model.LoginMode
+import com.kyc.favorapp.bean.BaseEntity
+import com.kyc.favorapp.bean.LoginInfo
+import com.kyc.favorapp.util.DataCallback
 import com.kyc.favorapp.util.SpConfig
 import com.kyc.favorapp.util.getStringSp
+import com.kyc.favorapp.util.toast
+import com.kyc.favorapp.vm.LoginViewModel
 import kotlinx.android.synthetic.main.fragment_login_test.*
 
 private const val ARG_PARAM1 = "param1"
@@ -17,12 +21,23 @@ private const val ARG_PARAM2 = "param2"
 /**
  *要持有viewMode，观察viewMode的数据进行视图处理
  */
-class LoginTestFragment : Fragment(), View.OnClickListener {
+class LoginTestFragment : AutoDisposeFragment(), View.OnClickListener {
+    private lateinit var loginViewModel: LoginViewModel
     override fun onClick(v: View?) {
         v?.let {
             when (it.id) {
                 R.id.button -> {
-                    LoginMode.toLogin(editext1.text.toString(), editext2.text.toString())
+                    loginViewModel.toLogin(editext1.text.toString(), editext2.text.toString())
+                        .subscribe(object : DataCallback<BaseEntity<LoginInfo>>() {
+                            override fun onSuccess(t: BaseEntity<LoginInfo>) {
+                                toast { "this is success by loginInfo" }
+                            }
+                            override fun onError(code: Int, msg: String) {
+                            }
+                        })
+                }
+                else -> {
+
                 }
             }
         }
@@ -34,6 +49,7 @@ class LoginTestFragment : Fragment(), View.OnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        loginViewModel = ViewModelProviders.of(this).get(LoginViewModel::class.java)
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
@@ -69,6 +85,7 @@ class LoginTestFragment : Fragment(), View.OnClickListener {
         button.setOnClickListener(this)
 
     }
+
 
     companion object {
         @JvmStatic

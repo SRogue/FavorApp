@@ -1,28 +1,39 @@
 package com.kyc.favorapp.util
 
-import io.reactivex.Observer
-import io.reactivex.disposables.Disposable
+import com.kyc.favorapp.bean.BaseEntity
+import io.reactivex.observers.DisposableObserver
 
 
-interface DataCallback<T> : Observer<T> {
+abstract class DataCallback<T> : DisposableObserver<T>() {
     override fun onComplete() {
-    }
 
-    override fun onSubscribe(d: Disposable) {
     }
 
     override fun onNext(t: T) {
-        onSuccess(t)
+        t?.let {
+            if (t is BaseEntity<*>) {
+                when (t.isSuccess()) {
+                    true -> onSuccess(t)
+                    else -> {
+                        toast { t.msg }
+                        onError(t.code, t.msg)
+                    }
+
+
+                }
+
+            }
+        }
+
     }
 
     override fun onError(e: Throwable) {
-        if (e is ResultThrowable) {
-            toast { e.msg }
-            onError(e.code, e.msg)
-        }
+        toast { e.toString() }
+
     }
 
-    fun onSuccess(t: T)
+    abstract fun onSuccess(t: T)
 
-    fun onError(code: Int, msg: String)
+    abstract fun onError(code: Int, msg: String)
+
 }
