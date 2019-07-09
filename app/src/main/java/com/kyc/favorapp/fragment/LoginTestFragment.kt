@@ -6,13 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProviders
 import com.kyc.favorapp.R
-import com.kyc.favorapp.bean.BaseEntity
-import com.kyc.favorapp.bean.LoginInfo
-import com.kyc.favorapp.util.DataCallback
-import com.kyc.favorapp.util.SpConfig
-import com.kyc.favorapp.util.getStringSp
-import com.kyc.favorapp.util.toast
+import com.kyc.favorapp.util.*
 import com.kyc.favorapp.vm.LoginViewModel
+import com.uber.autodispose.autoDisposable
 import kotlinx.android.synthetic.main.fragment_login_test.*
 
 private const val ARG_PARAM1 = "param1"
@@ -27,14 +23,7 @@ class LoginTestFragment : AutoDisposeFragment(), View.OnClickListener {
         v?.let {
             when (it.id) {
                 R.id.button -> {
-                    loginViewModel.toLogin(editext1.text.toString(), editext2.text.toString())
-                        .subscribe(object : DataCallback<BaseEntity<LoginInfo>>() {
-                            override fun onSuccess(t: BaseEntity<LoginInfo>) {
-                                toast { "this is success by loginInfo" }
-                            }
-                            override fun onError(code: Int, msg: String) {
-                            }
-                        })
+                    loginViewModel.toLogin2(editext1.text.toString(), editext2.text.toString())
                 }
                 else -> {
 
@@ -80,9 +69,15 @@ class LoginTestFragment : AutoDisposeFragment(), View.OnClickListener {
 
         }
 
-
-
         button.setOnClickListener(this)
+
+
+        loginViewModel.loginUserInfo
+            .toObservable()
+            .autoDisposable(scopeProvider)
+            .subscribe {
+            result_text.text = it.shopId
+        }
 
     }
 

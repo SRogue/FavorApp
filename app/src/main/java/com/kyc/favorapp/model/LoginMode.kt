@@ -7,11 +7,9 @@ import com.kyc.favorapp.util.*
 import io.reactivex.Observable
 
 object LoginMode {
-
     /**
      * 仅仅是用来处理数据    设置数据  和  删除数据
      */
-
     fun toLogin(userName: String, password: String): Observable<BaseEntity<LoginInfo>> {
         val hashMap = HashMap<String, Any>()
         hashMap["userName"] = userName
@@ -33,6 +31,6 @@ object LoginMode {
             }
         }
 
-      return  HttpUtils.get().login(transformRequestBody(hashMap))
+      return  HttpUtils.get().login(hashMap.toRequestBody())
     }
 }

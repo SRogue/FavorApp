@@ -1,5 +1,6 @@
 package com.kyc.favorapp.net
 
+import android.util.Log
 import com.kyc.favorapp.util.SpConfig
 import com.kyc.favorapp.util.SpUtil
 import okhttp3.HttpUrl
@@ -11,6 +12,7 @@ import java.util.concurrent.TimeUnit
 
 
 object HttpUtils {
+    private const val TAG = "HttpUtils"
 
     private val okHttpClient = OkHttpClient.Builder()
         .connectTimeout(HttpConfig.NETWORKTIMEOUT, TimeUnit.MILLISECONDS)
@@ -52,6 +54,7 @@ object HttpUtils {
                             .port(newBaseUrl.port())
                             .build()
                         //日志打印
+                        Log.e(TAG, newFullUrl.toString())
                         chain.proceed(builder.url(newFullUrl).build())
                     }
                     "imt" -> {

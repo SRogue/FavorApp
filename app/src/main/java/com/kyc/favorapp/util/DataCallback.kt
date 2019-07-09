@@ -1,5 +1,6 @@
 package com.kyc.favorapp.util
 
+import android.util.Log
 import com.kyc.favorapp.bean.BaseEntity
 import io.reactivex.observers.DisposableObserver
 
@@ -11,6 +12,7 @@ abstract class DataCallback<T> : DisposableObserver<T>() {
 
     override fun onNext(t: T) {
         t?.let {
+            Log.e("httpresult",t.toJson())
             if (t is BaseEntity<*>) {
                 when (t.isSuccess()) {
                     true -> onSuccess(t)
