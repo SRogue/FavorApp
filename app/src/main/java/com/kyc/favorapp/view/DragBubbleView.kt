@@ -433,4 +433,6 @@ Log.e("ondraw","ondrawing....")
         dragListener = listener
     }
 
+
+
 }

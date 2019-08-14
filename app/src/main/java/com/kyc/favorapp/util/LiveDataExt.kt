@@ -22,5 +22,5 @@ fun <T> LiveData<T>.toObservable(): Observable<T> {
             }
         }
 
-    }.nomarlSubscrib(sbThread = RxThread.ui, obThread = RxThread.ui)
+    }.normalSubscribe(sbThread = RxThread.ui, obThread = RxThread.ui)
 }

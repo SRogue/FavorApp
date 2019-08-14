@@ -7,7 +7,7 @@ apply plugin: 'kotlin-android-extensions'
 android {
     compileSdkVersion app_version.compileSdkVersion
     defaultConfig {
-        applicationId "com.kyc.favorapp"
+        applicationId application_id.app
         minSdkVersion app_version.minSdkVersion
         targetSdkVersion app_version.targetSdkVersion
         versionCode app_version.versionCode
@@ -39,31 +39,14 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation depens.kt_stdlib_jdk7
-    implementation depens.kt_coroutines_android
+    depens.each {
+        key, value -> implementation value
+    }
 
-
-    implementation depens.androidx_appcompat
-    implementation depens.androidx_constraintlayout
-    implementation depens.androidx_viewpager2
-    implementation depens.androidx_lifecycle
-    implementation depens.androidx_lifecycle_ktx
-    implementation depens.androidx_legacy
-    implementation depens.rx_kt
-    implementation depens.rx_android
-
-
-    implementation depens.retrofit
-    implementation depens.retrofitConverter
-    implementation depens.retrofitAdapter
-    implementation depens.log_intercepter
-
-    debugImplementation depens.leakcanary_debug
-    releaseImplementation depens.leakcanary_release
-
-
-    // autodispose
-    api depens.autodispose_android
-    api depens.autodispose
+    if (!isRelese) {
+        dependsForDebug.each {
+            k, v -> implementation v
+        }
+    }
 
 }

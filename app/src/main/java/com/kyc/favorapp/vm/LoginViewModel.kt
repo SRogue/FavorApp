@@ -8,7 +8,7 @@ import com.kyc.favorapp.bean.LoginInfo
 import com.kyc.favorapp.model.LoginMode
 import com.kyc.favorapp.util.DataCallback
 import com.kyc.favorapp.util.SpConfig
-import com.kyc.favorapp.util.nomarlSubscrib
+import com.kyc.favorapp.util.normalSubscribe
 import com.kyc.favorapp.util.saveSpValue
 import com.uber.autodispose.autoDisposable
 
@@ -32,7 +32,7 @@ class LoginViewModel : BaseViewModel() {
                 }
             }
             it
-        }.nomarlSubscrib()
+        }.normalSubscribe()
             .autoDisposable(this)
             .subscribe(object : DataCallback<BaseEntity<LoginInfo>>() {
                 override fun onSuccess(t: BaseEntity<LoginInfo>) {

@@ -8,7 +8,7 @@ import io.reactivex.Scheduler
  * RX拓展函数
  */
 //常规操作，子线程处理数据，主线程更新ui
-fun <T> Observable<T>.nomarlSubscrib(
+fun <T> Observable<T>.normalSubscribe(
     sbThread: Scheduler = RxThread.io,
     obThread: Scheduler = RxThread.ui
 ): Observable<T> {
