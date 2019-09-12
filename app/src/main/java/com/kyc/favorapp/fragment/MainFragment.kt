@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.kyc.favorapp.R
 import com.kyc.favorapp.activity.AsyncDiffActivity
+import kotlinx.android.synthetic.main.fragment_main.*
 import kotlinx.android.synthetic.main.inflate_view.text
 import kotlinx.android.synthetic.main.fragment_main.text as text1
 
@@ -58,6 +59,8 @@ class MainFragment : Fragment() {
         text.setOnClickListener {
             AsyncDiffActivity.intentMe(context!!)
         }
+
+        clean_draw.setOnClickListener { draw_path_view.cleanPaint() }
 
     }
 
