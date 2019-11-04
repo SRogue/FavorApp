@@ -20,10 +20,10 @@ class LoginViewModel : BaseViewModel() {
 
     fun toLogin2(userName: String, password: String) {
         LoginMode.toLogin(userName, password).map { it ->
-            it?.apply {
+            it.apply {
                 SystemClock.sleep(5 * 1000)
                 if (isSuccess()) {
-                    data?.let {
+                    data.let {
                         saveSpValue(SpConfig.SHOP_ID, it.shopId)
                         saveSpValue(SpConfig.TOKEN, it.jwt)
                         saveSpValue(SpConfig.ACCOUNT_NUMBER, userName)
@@ -36,7 +36,7 @@ class LoginViewModel : BaseViewModel() {
             .autoDisposable(this)
             .subscribe(object : DataCallback<BaseEntity<LoginInfo>>() {
                 override fun onSuccess(t: BaseEntity<LoginInfo>) {
-                    t.data?.apply(loginUserInfo::postValue)
+                    t.data.apply(loginUserInfo::postValue)
                 }
 
                 override fun onError(code: Int, msg: String) {}
