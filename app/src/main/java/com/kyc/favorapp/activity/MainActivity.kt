@@ -1,6 +1,7 @@
 package com.kyc.favorapp.activity
 
 import android.content.Context
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.ViewGroup
@@ -54,6 +55,7 @@ class MainActivity : AppCompatActivity(), MainFragment.OnFragmentInteractionList
 
 
     private fun initListener() {
+        jumpHook.setOnClickListener { startActivity(Intent(this, HookActivity::class.java)) }
         rg.setOnCheckedChangeListener { _, checkedId ->
             when (checkedId) {
                 R.id.first -> gotoPage(0)

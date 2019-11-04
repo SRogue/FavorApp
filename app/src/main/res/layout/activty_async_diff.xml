@@ -31,4 +31,27 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 
+    <TextView
+            android:id="@+id/stander_model"
+            android:text="this is the single top activity"
+            android:layout_width="wrap_content"
+            android:textColor="#DF1414"
+            android:layout_centerInParent="true"
+            android:layout_height="wrap_content"/>
+
+    <Button
+            android:id="@+id/toStander"
+            android:text="toStander"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    <Button
+            android:id="@+id/toSingleTop"
+            android:text="toSingleTop"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
 </RelativeLayout>

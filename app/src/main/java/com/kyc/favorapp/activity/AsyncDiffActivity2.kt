@@ -9,11 +9,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.SimpleItemAnimator
 import com.kyc.favorapp.R
 import com.kyc.favorapp.adapter.AsyncDiffAdapter
-import com.kyc.favorapp.util.toast
 import kotlinx.android.synthetic.main.activty_async_diff.*
 import kotlin.random.Random
 
-class AsyncDiffActivity : AppCompatActivity(), View.OnClickListener {
+class AsyncDiffActivity2 : AppCompatActivity(), View.OnClickListener {
     private val mDatas: ArrayList<Int> by lazy { ArrayList<Int>() }
 
     private val adapters: AsyncDiffAdapter by lazy { AsyncDiffAdapter(mDatas) }
@@ -67,31 +66,21 @@ class AsyncDiffActivity : AppCompatActivity(), View.OnClickListener {
         change_bt.setOnClickListener(this)
         add_bt.setOnClickListener(this)
         delete_bt.setOnClickListener(this)
-
         testJump()
-
     }
 
     private fun testJump() {
-        stander_model.text = "singleInstance   999$taskId"
+        stander_model.text = "stander   999$taskId"
 
-        toStander.setOnClickListener {
-            startActivity(Intent(this, AsyncDiffActivity2::class.java))
-        }
 
-        toSingleTop.setOnClickListener {
-            startActivity(Intent(this, AsyncDiffActivity::class.java))
-        }
-    }
+        toStander.setOnClickListener { startActivity(Intent(this, AsyncDiffActivity2::class.java)) }
 
-    override fun onNewIntent(intent: Intent?) {
-        super.onNewIntent(intent)
-        toast{"onNewIntent"}
+        toSingleTop.setOnClickListener { startActivity(Intent(this, AsyncDiffActivity::class.java)) }
     }
 
     companion object {
         fun intentMe(context: Context) {
-            context.startActivity(Intent(context, AsyncDiffActivity::class.java).apply {
+            context.startActivity(Intent(context, AsyncDiffActivity2::class.java).apply {
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK
             })
         }

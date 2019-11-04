@@ -1,89 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
     <RelativeLayout
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".activity.MainActivity">
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".activity.MainActivity">
 
         <RadioGroup
-            android:id="@+id/rg"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_alignParentBottom="true"
-            android:orientation="horizontal"
-            >
+                android:id="@+id/rg"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_alignParentBottom="true"
+                android:orientation="horizontal"
+        >
 
             <RadioButton
-                android:id="@+id/first"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@null"
-                android:button="@null"
-                android:gravity="center"
-                android:text="萝莉" />
+                    android:id="@+id/first"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text="萝莉"/>
 
             <RadioButton
-                android:id="@+id/second"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@null"
-                android:button="@null"
-                android:gravity="center"
-                android:text="御姐" />
+                    android:id="@+id/second"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text="御姐"/>
 
             <RadioButton
-                android:id="@+id/third"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@null"
-                android:button="@null"
-                android:gravity="center"
-                android:text="少女" />
+                    android:id="@+id/third"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text="少女"/>
 
             <RadioButton
-                android:id="@+id/fourth"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@null"
-                android:button="@null"
-                android:gravity="center"
-                android:text="人妻" />
+                    android:id="@+id/fourth"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text="人妻"/>
         </RadioGroup>
 
         <View
-            android:id="@+id/divider_line"
-            android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:layout_above="@+id/rg"
-            android:background="@android:color/holo_red_dark"
-             />
+                android:id="@+id/divider_line"
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_above="@+id/rg"
+                android:background="@android:color/holo_red_dark"
+        />
 
         <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/viewpager2"
-            android:layout_width="match_parent"
-            android:layout_above="@+id/rg"
-            android:layout_height="match_parent"
-             />
+                android:id="@+id/viewpager2"
+                android:layout_width="match_parent"
+                android:layout_above="@+id/rg"
+                android:layout_height="match_parent"
+        />
 
     </RelativeLayout>
 
 
     <FrameLayout
-        android:id="@+id/frame_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@android:color/transparent"
-        android:visibility="gone">
+            android:id="@+id/frame_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"
+            android:visibility="gone">
 
     </FrameLayout>
+
+    <Button
+            android:id="@+id/jumpHook"
+            android:layout_width="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="jump hook activity"
+            android:visibility="gone"
+            android:layout_height="wrap_content"/>
 
 </RelativeLayout>

@@ -125,7 +125,7 @@ class DiscView constructor(context: Context, attrs: AttributeSet? = null, defSty
 
     private fun initViewPager() {
         mViewPagerAdapter = ViewPagerAdapter()
-        mVpContain = findViewById(R.id.vpDiscContain) as ViewPager
+        mVpContain = findViewById<ViewPager>(R.id.vpDiscContain)
         mVpContain!!.overScrollMode = View.OVER_SCROLL_NEVER
         mVpContain!!.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             internal var lastPositionOffsetPixels = 0
@@ -368,7 +368,7 @@ class DiscView constructor(context: Context, attrs: AttributeSet? = null, defSty
             mDiscAnimators.add(getDiscObjectAnimator(disc))
             mDiscLayouts.add(discLayout)
         }
-        mViewPagerAdapter!!.notifyDataSetChanged()
+        mViewPagerAdapter?.notifyDataSetChanged()
 
         val musicData = mMusicDatas[0]
         if (mIPlayInfo != null) {
@@ -522,7 +522,7 @@ class DiscView constructor(context: Context, attrs: AttributeSet? = null, defSty
             return discLayout
         }
 
-        override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
+        override fun destroyItem(container: ViewGroup, position: Int, any: Any) {
             container.removeView(mDiscLayouts[position])
         }
 
